@@ -1,0 +1,41 @@
+<div class="conteudo-animado">
+    <table class="tbGrupo">
+        <h1>Tarefas</h1>
+        <tbody>
+            <tr>
+                <th>
+                    Nome da Tarefa
+                </th>
+                <th>
+                    Responsavel
+                </th>
+                <th>
+                    Status
+                </th>
+            </tr>
+            {% if tarefas %}
+                {% for t in tarefas %}
+                    <tr id="{{t['id_tarefa']}}">
+                        <td>
+                            {{t['nome']}}
+                        </td>
+                        <td>
+                            {{t['responsavel']}}
+                        </td>
+                        <td>
+                            {{t['status']}}
+                        </td>
+                        <td>
+                            <a href="#">ver descrição</a>
+                        </td>
+                        {% if t['id_responsavel'] == id_user %}
+                            <td>
+                                <a onclick="apagarTarefa({{t['id_tarefa']}})" href="#"><i class="lixeira fas fa-trash-alt"></i></a>
+                            </td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                {% endif %}
+        </tbody>
+    </table> 
+</div>

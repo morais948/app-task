@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block container %}
+    <div class="conteudo container">
+        <header>
+            <div class="row">
+                <div class="col-2">
+                    <a href="http://localhost:5000/login">
+                        <img class="logo" src="{{ url_for('static',filename='imgs/logo2.jpg') }}" alt="logo">
+                    </a>
+                </div>
+                <div class="col-10 cabecalho">
+                    <h1>APP - LIST TASK - ORGANIZE-SE MELHOR</h1>
+                </div>
+            </div>
+        </header>
+        <nav>
+            <div class="container">
+                <div class="row mb-3">
+                    <div class="col-12"><a class="link-menu" href="#">Meu Perfil</a></div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12"><a class="link-menu" href="#">Minhas Tarefas</a></div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12"><a class="link-menu" href="#">Criar Grupo</a></div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12"><a class="link-menu" href="#" onclick="carregarGrupos()">Grupos</a></div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12"><a class="link-menu" href="http://localhost:5000/sair">Sair</a></div>
+                </div>
+            </div>
+        </nav>
+        <main>
+            <div class="row">
+                <div id="cont" class="col-12 conteudo-animado">
+                    <!---->
+                    <img class="img-principal" src="{{ url_for('static',filename='imgs/t4.png') }}" alt="foto de apresentação">
+                </div>
+            </div>
+        </main>
+        <footer>
+            <div class="row">
+                <div class="col-12">
+                    <i class="fas fa-heart"></i> copyright &#169; Matheus Morais 22/06/2020 <i class="fas fa-heart"></i>
+                </div>
+            </div>
+        </footer>
+    </div>
+{% endblock %}

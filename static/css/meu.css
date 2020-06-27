@@ -1,0 +1,162 @@
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-image: url(../imgs/fundo3.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+table{
+    margin: 0px auto;
+    width: 95%;
+}
+th, td {
+    padding: 5px;
+    text-align: left;
+}
+
+tr a:hover{
+    color: yellow;
+}
+
+tr:hover{
+    background-color: darkgray;
+}
+
+::-webkit-input-placeholder {
+    color: white;
+    opacity: 70%;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+    color: white;
+    opacity: 70%;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+    color: white;
+    opacity: 70%;
+}
+
+:-ms-input-placeholder {  
+    color: white;
+    opacity: 70%;
+}
+
+.conteudo header{
+    grid-area: cabecalho;
+}
+.conteudo nav{
+    font-size: 1.2rem;
+    margin-top: 20%;
+    grid-area: navegacao;
+    overflow: hidden;
+    border-radius: 5%;
+    text-decoration: none;
+    padding-left: 5%;
+}
+
+.conteudo nav a{
+    color: white;
+    text-decoration: none;
+}
+
+.conteudo .link-menu:hover{
+    background-color: white;
+    color: black;
+    border-radius: 5px;
+}
+
+.conteudo main{
+    grid-area: conteudo;
+    background-color: white;
+    color: black;
+}
+.conteudo footer{
+    grid-area: rodape;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    justify-content: flex-end;
+    background-color: #4F4F4F;
+    color: white;
+    font-size: 15px;
+}
+
+.conteudo {
+    padding: 0;
+    color: white;
+    background-color: black;
+    box-shadow: 10px 10px 20px black;
+    font-family: fantasy;
+    font-size: 2rem;
+    box-sizing: border-box;
+    display: grid;
+    min-height: 100vh;
+    /* width: 100vw; */
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: 150px 1fr 50px;
+    grid-template-areas: 
+    'cabecalho cabecalho'
+    'navegacao conteudo'
+    'rodape rodape';
+    box-sizing: border-box;
+    font-family: cursive;
+    overflow: hidden;
+}
+
+.logo{
+    width: 150px;
+}
+
+.cabecalho{
+    display: flex; 
+    align-items: center;
+    font-weight: bolder;
+    border-radius: 47%;
+}
+
+#cont{
+    font-size: 1.5rem;
+}
+
+a.link-cadastro{
+    position: absolute;
+    bottom: 5%;
+    left: 5%;
+    font-size: 30px;
+    font-family: cursive;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+a.link-cadastro:hover{
+    box-shadow: 10px 10px 13px black;
+}
+
+.conteudo-animado{
+    padding: 2%;
+}
+.conteudo-animado a{
+    text-decoration: none;
+    color: black;
+}
+
+.tbGrupo{
+    background-color: #ADD8E6;
+}
+.lixeira{
+    color: black;
+}
+
+.lixeira:hover{
+    color: red;
+}
+
+.img-principal{
+    width: 100%;
+    margin: auto 0px;
+}
+

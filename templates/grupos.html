@@ -1,0 +1,27 @@
+<div class="row conteudo-animado">
+    <div class="col-12">
+        <table class="tbGrupo">
+            <h1>Grupos</h1>
+            <tbody>
+                {% if grupos %}
+                    {% for g in grupos %}
+                        <tr>
+                            <td>
+                                {{g['nome_grupo']}}
+                            </td>
+                            <td>
+                                <a href="#" onclick="carregarTarefasGrupo({{g['id']}})">Tarefas do grupo</a>
+                            </td>
+                            <td>
+                                <a href="#">Ações</a>
+                            </td>
+                            <td>
+                                <a href="#">Mais Informações</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table> 
+    </div>
+</div>
