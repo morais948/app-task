@@ -65,7 +65,16 @@ function verResultado(txt){
 			rows: '15'
 		}).appendTo(pai);
 		$('#resultado textarea').val(txt)
-	}
+	}else{
+        $(pai).html('')
+        $('<textarea>', {
+			id: 'areaResultado',
+			class: 'textDesc2 conteudo-animado',
+			disabled: true,
+			rows: '15'
+		}).appendTo(pai);
+		$('#resultado textarea').val(txt)
+    }
 }
 
 function carregarEdit(id){
