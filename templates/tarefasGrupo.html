@@ -31,6 +31,9 @@
                         </td>
                         {% if t['id_responsavel'] == id_user and t['status'] == 'por fazer' %}
                             <td>
+                                <a onclick="marcarTarefa('{{t['id_tarefa']}}')" class="checado" href="#" ><i class="fas fa-check-square"></i></a>
+                            </td>
+                            <td>
                                 <a onclick="carregarEdit({{t['id_tarefa']}})" href="#"><i class="fas fa-edit"></i></a>
                             </td>
                         {% endif %}
@@ -48,3 +51,21 @@
         
     </div>
 </div>
+<script>
+    function marcarTarefa(id){
+        $.ajax({
+        url : 'http://localhost:5000/marcar_feita',
+        type : 'put',
+        data: {
+            idTarefa: id
+        }
+        })
+        .done(function(msg){
+            document.location.reload(true);
+            alert(msg)
+        })
+        .fail(function(jqXHR, textStatus, msg){
+            alert(msg);
+        }); 
+    }
+</script>

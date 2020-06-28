@@ -148,6 +148,9 @@ a.link-cadastro:hover{
 .tbGrupo{
     background-color: #ADD8E6;
 }
+.tbGrupo tr:hover{
+    background-color: #ADD8E6;
+}
 .lixeira{
     color: black;
 }
@@ -196,6 +199,10 @@ a.link-cadastro:hover{
 
 #tbGrupoInfo{
     text-align: center;
+}
+
+.checado:hover{
+    color: green;
 }
 
 .textDesc{

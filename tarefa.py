@@ -40,11 +40,11 @@ class Tarefa(object):
         query = f"delete from tarefas where id={id}"
         self._executar_comando(query, salvar=True)
 
-    def marcar_como_feita(self, id, data_feita):
-        query = "UPDATE tarefas t SET t.dta_feita = %s where t.id = %s"
-        dados = (f'{data_feita}', f'{id}')
-        self._executar_comando(query, dados, True)
-    
+    def marcar_como_feita(self, id):
+        args = [id]
+        lista = self._cursor.callproc('atualizar_status', args)
+        self._conexao.commit()
+ 
     def editar_resultado(self, id, desc):
         query = "UPDATE tarefas t SET t.resultado = %s where t.id = %s"
         dados = (f'{desc}', f'{id}')
@@ -70,7 +70,7 @@ class Tarefa(object):
         
 if __name__ == "__main__":
     tarefa = Tarefa()
-    print(tarefa.listar_tarefas(16))
+    print(tarefa.marcar_como_feita(14))
     #tarefa.editar_descricao(6, 'teste')
     #tarefa.criar_tarefa(24, 1, 'apresentar trabalho', 'apresentar um app feito para gerenciamento de tarefas', '2020/06/23')
     #tarefa.excluir_tarefa(8)

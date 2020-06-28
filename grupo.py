@@ -69,27 +69,56 @@ class Grupo(object):
         return lista
 
     def get_integrantes(self, id_grupo):
-        query = f"SELECT t.id_responsavel, u.nome FROM tarefas t join grupos g on t.id_grupo = g.id join usuarios u on t.id_responsavel = u.id where g.id = {id_grupo}"
-        self._executar_comando(query)
+        query_participantes = f"SELECT g.ids_participante from grupos g WHERE g.id = {id_grupo}"
+        self._executar_comando(query_participantes)
+        lista_participantes = []
+        for (ids) in self._cursor:
+            for i in ids:
+                if len(i.split(',')) == 1:
+                    lista_participantes = i
+                else:
+                    lista_participantes = i.split(',')
+                    lista_participantes = ','.join(lista_participantes)
+        dados = lista_participantes
+        
+        query_final = f"SELECT u.id, u.nome from usuarios u WHERE u.id in({dados})"
+        self._executar_comando(query_final)
         lista = []
         for (id_responsavel, nome) in self._cursor:
             dic = {"id_responsavel": id_responsavel, "nome": nome}
-            json_str = json.dumps(dic) 
-            lista.append(json_str)
+            lista.append(dic)
         return lista
+    
+    def inserir_participante(self, id_grupo, id_user):        
+        query_0 = f"select * from usuarios u where u.id = {id_user}"
+        self._executar_comando(query_0)
+        user = None
+        for i in self._cursor:
+            user = i
+        if user:
+            query = f"SELECT * from grupos g WHERE g.ids_participante like '%{id_user}%' and g.id = {id_grupo}"
+            self._executar_comando(query)
+            ja_existe = None
+            for i in self._cursor:
+                ja_existe = i
+            if ja_existe != None:
+                return 'usuário já está no grupo'
 
-    def inserir_participante(self, id_grupo, id_user):
-        query_1 = f"select g.ids_participante from grupos g where g.id = {id_grupo}"
-        self._executar_comando(query_1)
-        participantes = None
-        for x in self._cursor:
-            participantes = x[0]
+            query_1 = f"select g.ids_participante from grupos g where g.id = {id_grupo}"
+            self._executar_comando(query_1)
+            participantes = None
+            for x in self._cursor:
+                participantes = x[0]
 
-        query_2 = "UPDATE grupos SET ids_participante = %s where id = %s"
-        dados = (f'{participantes + "," + str(id_user)}', f'{id_grupo}')
-        self._executar_comando(query_2, dados, True)
+            query_2 = "UPDATE grupos SET ids_participante = %s where id = %s"
+            dados = (f'{participantes + "," + str(id_user)}', f'{id_grupo}')
+            self._executar_comando(query_2, dados, True)
+            return 'usuário adicionado!'
+        else:
+            return 'usuário inválido'
+        
 
-    def excluir_participante(self, id_grupo, id_user, lider=''):
+    def excluir_participante(self, id_grupo, id_user):
         query_1 = f"select g.ids_participante from grupos g where g.id = {id_grupo}"
         self._executar_comando(query_1)
         participantes = None
@@ -109,4 +138,5 @@ class Grupo(object):
               
 if __name__ == '__main__':
     gp = Grupo()
-    print(gp.get_integrantes(1))
+    print(gp.get_integrantes(8))
+    #print(gp.inserir_participante(3, 25))

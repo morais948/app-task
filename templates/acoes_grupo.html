@@ -1,28 +1,157 @@
 <div class="conteudo-animado">
-    <h1 style="text-align: center;">Ações Grupo</h1>
+    <h1 style="text-align: center;">Ações do Grupo</h1>
     <table style="font-size: 1rem;" class="tbGrupo conteudo-animado">
         <tbody>
             <tr>
                 <th style="border-right: 1px solid black;">
                     <h2 style="text-align: center;">Designar Tarefa</h2>
                     <hr>
-                    <select onclick="buscarIntegrantes({{id}})" style="width: 100%; color: black;" id="integrantes" >
-                        <option value="#">integrantes</option>
-                    </select>
-                    <br>
-                    <input style="width: 100%;" name="nome" type="text" value="Nome da Tarefa">
-                    <br>
-                    <input style="width: 100%;"  name="desc" type="text" value="descrição">
-                    <br>
-                    <input style="width: 100%;"  name="data" type="date">
-                    <input style="display: none;" name="id_responsavel" type="text" value="{{id}}">
-                    <button>Designar</button>
+                    <form>
+                        <label for="integrantes">Designar para: </label>
+                        <select name="integrantes" style="width: 100%; color: black;" id="integrantes" >
+                            <option value="#">integrantes</option>
+                            {% if responsaveis %}
+                                {% for p in responsaveis %}   
+                                    <option value="{{p['id_responsavel']}}">id: {{p['id_responsavel']}} nome: {{p['nome']}}</option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                        <br>
+                        <label for="nome">Nome da Tarefa:</label>
+                        <input style="width: 100%;" name="nome" type="text">
+                        <br>
+                        <label for="desc">Descrição da Tarefa:</label>
+                        <input style="width: 100%;"  name="desc" type="text">
+                        <br>
+                        <label for="data">Data de Entrega:</label>
+                        <input style="width: 100%;" name="data" type="date">
+                        <input style="display: none;" name="idGrupo" value="{{id_grupo}}" type="text">
+                        <button style="width: 100%; margin: 2% auto;" class="btn btn-dark btn-lg" id="btnSub">designar</button>
+                    </form>
                 </th>
                 <th style="border-right: 1px solid black;">
                     <h2 style="text-align: center;">Adicionar Integrante</h2>
-                    <hr>
+                    <br>
+                    <form>
+                        <label for="idUser">ID do Usuário:</label>
+                        <input style="width: 100%;" type="text" name="idUser">
+                        <button style="width: 100%; margin: 2% auto;" id="btnAdd" class="btn btn-dark btn-lg">adicionar</button>
+                    </form>
                 </th>
             </tr>
+            <tfoot>
+                <tr>
+                    <td>
+                        <p style="display: none;" id="meuId">{{user}}</p>
+                        <button id="btnSair" class="btn btn-secondary">sair do grupo</button>
+                    </td>
+                </tr>
+            </tfoot>
         </tbody>
     </table>  
 </div>
+<script>
+    document.querySelector('#btnSub').addEventListener('click', function(e){
+        e.preventDefault()
+        //let dados = $('form').serialize()
+        let integrantes = document.getElementsByName('integrantes')
+        let idGrupo = document.getElementsByName('idGrupo')
+        let nomeTarefa = document.getElementsByName('nome')
+        let desc = document.getElementsByName('desc')
+        let data = document.getElementsByName('data')
+        let podeEnviar = false
+
+        if($(integrantes).val() == '#'){
+            alert('por favor escolha um integrante')
+        }
+        if($(nomeTarefa).val() == ''){
+            alert('por favor escolha um nome para a tarefa')
+        }
+        if($(data).val() == ''){
+            alert('por favor escolha uma data')
+        }
+        if($(integrantes).val() != '#' && $(nomeTarefa).val() != '' && $(data).val() != ''){
+            podeEnviar = true
+        }
+        if(podeEnviar){
+            console.log('pode enviar')
+            
+            $.ajax({
+                url : "http://localhost:5000/criar_tarefa",
+                type : 'post',
+                data : {
+                    idResponsavel: $(integrantes).val(),
+                    idGrupo: $(idGrupo).val(),
+                    nomeTarefa: $(nomeTarefa).val(),
+                    desc: $(desc).val(),
+                    dataEntrega: $(data).val()
+                },
+           })
+           .done(function(msg){
+                alert(msg)
+           })
+           .fail(function(jqXHR, textStatus, msg){
+                alert(msg);
+           });
+           
+        }
+    })
+
+    document.querySelector('#btnAdd').addEventListener('click', function(e){
+        e.preventDefault()
+        //let dados = $('form').serialize()
+        let idGrupo = document.getElementsByName('idGrupo')
+        let idUser = document.getElementsByName('idUser')
+        let podeEnviar = false
+
+        if($(idUser).val() == ''){
+            alert('por favor preencha o campo ID')
+        }
+        if($(idUser).val() != '' ){
+            podeEnviar = true
+        }
+        if(podeEnviar){
+            console.log('pode enviarrrrrr')
+            
+            $.ajax({
+                url : "http://localhost:5000/adicionar_no_grupo",
+                type : 'post',
+                data : {
+                    idGrupo: $(idGrupo).val(),
+                    idUser: $(idUser).val()
+                },
+           })
+           .done(function(msg){
+                alert(msg)
+           })
+           .fail(function(jqXHR, textStatus, msg){
+                alert(msg);
+           });
+           
+        }
+    })
+
+
+    document.querySelector('#btnSair').addEventListener('click', function(e){
+        e.preventDefault()
+        //let dados = $('form').serialize()
+        let idGrupo = document.getElementsByName('idGrupo')
+        let idUser = document.getElementsByName('idUser')
+        
+        $.ajax({
+                url : "http://localhost:5000/sair_do_grupo",
+                type : 'put',
+                data : {
+                    idGrupo: $(idGrupo).val(),
+                    idUser: $('#meuId').html()
+                },
+           })
+           .done(function(msg){
+                alert(msg)
+           })
+           .fail(function(jqXHR, textStatus, msg){
+                alert(msg);
+           });
+               
+    })
+</script>

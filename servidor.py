@@ -62,11 +62,55 @@ def grupos():
         grupo = Grupo()
         grupos = grupo.pesquisar_grupos(user.get_id())
         return render_template('grupos.html', grupos=grupos)
+    else:
+        return 'você não está logado'
+
+@app.route('/adicionar_no_grupo', methods=['POST'])
+def adicionar_no_grupo():
+    if esta_logado:
+        id_grupo = request.form['idGrupo']
+        id_user = request.form['idUser']
+        grupo = Grupo()
+        msg = grupo.inserir_participante(id_grupo, id_user)
+        return msg
+    else:
+        return 'você não está logado'
+
+@app.route('/carrega_tela_criar', methods=['GET'])
+def carrega_tela_criar():
+    if esta_logado:
+        return render_template('criar_grupo.html')
+    else:
+        return 'você não está logado'
+
+@app.route('/criar_grupo', methods=['POST'])
+def criar_grupo():
+    if esta_logado:
+        nome = request.form['nomeGp']
+        descricao = request.form['descricaoGp']
+        gp = Grupo()
+        gp.criar_grupo(nome, descricao, user.get_id())
+        return 'grupo criado'
+    else:
+        return 'você não está logado'
+
+@app.route('/sair_do_grupo', methods=['PUT'])
+def sair_do_grupo():
+    if esta_logado:
+        id_grupo = request.form['idGrupo']
+        id_user = request.form['idUser']
+        grupo = Grupo()
+        grupo.excluir_participante(id_grupo, id_user)
+        return 'você saiu'
+    else:
+        return 'você não está logado'
 
 @app.route('/acoes_grupo/<id_grupo>', methods=['GET'])
 def acoes_grupo(id_grupo):
     if esta_logado:
-        return render_template('acoes_grupo.html', id=id_grupo)
+        gp = Grupo()
+        responsaveis = gp.get_integrantes(id_grupo)
+        return render_template('acoes_grupo.html', id_grupo=id_grupo, responsaveis=responsaveis, user=user.get_id())
     else:
         return 'vc não está logado'
 
@@ -76,12 +120,17 @@ def infos_grupos(id_grupo):
         grupo = Grupo()
         infos = grupo.pegar_informacoes(id_grupo)
         return render_template('infos_grupo.html', gp=infos)
+    else:
+        return 'você não está logado'
 
 @app.route('/integrantes/<id_grupo>', methods=['GET'])
 def integrantes(id_grupo):
-    grupo = Grupo()
-    infos = grupo.get_integrantes(id_grupo)
-    return f'{infos}'
+    if esta_logado:
+        grupo = Grupo()
+        infos = grupo.get_integrantes(id_grupo)
+        return f'{infos}'
+    else:
+        return 'você não está logado'
 
 @app.route('/tarefas_gp/<id_grupo>', methods=['GET'])
 def tarefas_gp(id_grupo):
@@ -90,6 +139,36 @@ def tarefas_gp(id_grupo):
         tarefas = grupo.get_tarefas(id_grupo)
         id_user = user.get_id()
         return render_template('tarefasGrupo.html', tarefas=tarefas, id_user=id_user)
+    else:
+        return 'você não está logado'
+
+@app.route('/marcar_feita', methods=['PUT'])
+def marcar_feita():
+    if esta_logado:
+        id_tarefa = request.form['idTarefa']
+        tarefa = Tarefa()
+        tarefa.marcar_como_feita(id_tarefa)
+        return 'status atualizado'
+    else:
+        return 'você não está logado'
+
+
+@app.route('/criar_tarefa', methods=['POST'])
+def criar_tarefa():
+    #if esta_logado:
+    if esta_logado:
+        id_responsavel = request.form['idResponsavel']
+        id_grupo = request.form['idGrupo']
+        nome_tarefa = request.form['nomeTarefa']
+        desc = request.form['desc']
+        data_entrega = request.form['dataEntrega']
+
+        tarefa = Tarefa()
+        tarefa.criar_tarefa(id_responsavel, id_grupo, nome_tarefa, desc, data_entrega)
+
+        return 'Tarefa criada!'
+    else:
+        return 'você não está logado'
 
 @app.route('/remover_tarefa', methods=['POST'])
 def remover_tarefa():
@@ -99,6 +178,8 @@ def remover_tarefa():
         tarefa.excluir_tarefa(id)
 
         return 'Tarefa removida!'
+    else:
+        return 'você não está logado'
 
 @app.route('/editar_tarefa/<id_tarefa>', methods=['GET'])
 def mostrar_edit_tarefa(id_tarefa):

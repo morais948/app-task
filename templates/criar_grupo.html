@@ -1,0 +1,68 @@
+<div class="conteudo-animado">
+    <table style="font-size: 2.2rem;" class="tbGrupo conteudo-animado">
+        <tbody>
+            <tr>
+                <th style="text-align: center; border-right: 2px solid black;">
+                    nome
+                </th>
+                <th style="text-align: center; border-right: 2px solid black;">
+                    descrição
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <input style="width: 100%;" type="text" name="nome">
+                </td>
+                <td>
+                    <input style="width: 100%;" type="text" name="descricao">
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td style="text-align: center;" colspan="2">
+                    <p style="display: none;" id="meuId">{{user}}</p>
+                    <i id="btnCriar" class="fas fa-check-double meu-btn"></i>
+                </td>
+            </tr>
+        </tfoot>
+    </table>  
+</div>
+<script>
+
+    document.querySelector('#btnCriar').addEventListener('click', function(e){
+        e.preventDefault()
+        //let dados = $('form').serialize()
+        let nome = document.getElementsByName('nome')
+        let descricao = document.getElementsByName('descricao')
+     
+        let podeEnviar = false
+
+        if($(nome).val() == ''){
+            alert('por favor escolha um nome para o grupo')
+        }
+
+        if($(nome).val() != ''){
+            podeEnviar = true
+        }
+        if(podeEnviar){
+   
+            $.ajax({
+                url : "http://localhost:5000/criar_grupo",
+                type : 'post',
+                data : {
+                    nomeGp: $(nome).val(), 
+                    descricaoGp: $(descricao).val()
+                }
+            })
+            .done(function(msg){
+                    alert(msg)
+            })
+            .fail(function(jqXHR, textStatus, msg){
+                    alert(msg)
+            })
+           
+        }
+    })
+
+</script>

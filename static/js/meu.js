@@ -48,7 +48,7 @@ function apagarTarefa(id){
 }
 
 function verDescricao(txt){
-        if(txt == 'None'){
+        if(txt == 'None' || txt == ''){
 			txt = 'Sem Descrição'
         }
         $('#descricao').html(txt)
@@ -166,21 +166,19 @@ function acoesGrupo(id_grupo){
     }); 
 }
 
-function buscarIntegrantes(id_grupo){
-	$.ajax({
-        url : `http://localhost:5000/integrantes/${id_grupo}`,
-        type : 'get',
+function criarGrupo(){
+    $.ajax({
+    url : 'http://localhost:5000/carrega_tela_criar',
+    type : 'get',
+    beforeSend : function(){
+            $("#cont").html('carregando...')
+            }
     })
     .done(function(msg){
-		/*
-		$('<option>', {
-			value: 'test'
-		}).val('testando').appendTo(pai);
-		*/
-		alert(msg)
+            $("#cont").html(msg);
     })
     .fail(function(jqXHR, textStatus, msg){
-        alert(msg);
+            alert(msg);
     }); 
 }
 
