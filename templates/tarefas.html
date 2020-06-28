@@ -1,0 +1,57 @@
+<table style="font-size: 1rem;" class="tbGrupo conteudo-animado">
+    <tbody>
+        <tr>
+            <th style="border-right: 1px solid black;">
+                Nome
+            </th>
+            <th style="border-right: 1px solid black;">
+                Descrição
+            </th>
+            <th style="border-right: 1px solid black;">
+                Resultado
+            </th>
+            <th style="border-right: 1px solid black;">
+                Data de Inicio
+            </th>
+            <th style="border-right: 1px solid black;">
+                Data de Entrega
+            </th>
+            <th style="border-right: 1px solid black;">
+                Data que foi feita
+            </th>
+        </tr>
+        {% if tarefas %}
+            {% for t in tarefas %}
+                <tr>
+                    <td style="border-right: 1px solid black;">
+                        {{t['nome_tarefa']}}
+                    </td style="border-right: 1px solid black;">
+                    <td style="border-right: 1px solid black;">
+                        {{t['descricao']}}
+                    </td>
+                    {% if t['resultado'] == 'sem documento' %}
+                        <td style="border-right: 1px solid black;">
+                            {{t['resultado']}}
+                        </td>
+                    {% else %}
+                        <td style="border-right: 1px solid black;">
+                            <a onclick="verResultado('{{t['resultado']}}')" href="#">ver resultado</a>
+                        </td>
+                    {% endif %}
+                    <td style="border-right: 1px solid black;">
+                        {{t['data_inicio']}}
+                    </td>
+                    <td style="border-right: 1px solid black;">
+                        {{t['data_entrega']}}
+                    </td>
+                    <td style="border-right: 1px solid black;">
+                        {{t['dta_feita']}}
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+    </tbody>
+</table> 
+<div id="resultado">
+        
+</div>

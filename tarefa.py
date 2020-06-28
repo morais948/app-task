@@ -20,11 +20,19 @@ class Tarefa(object):
         self._executar_comando(query, dados, True)
 
     def listar_tarefas(self, id):
-        query = f'select t.* from tarefas t where t.id_responsavel = {id}'
+        query = f'SELECT t.nome_tarefa, t.descricao, t.resultado, t.data_inicio, t.data_entrega, t.dta_feita FROM tarefas t WHERE t.id_responsavel = {id}'
         lista = []
         self._executar_comando(query)
-        for (id, id_responsavel, id_grupo, nome_tarefa, descricao, data_inicio, data_entrega, dta_feita, resultado) in self._cursor:
-            dic = {"id": id, "id_responsavel": id_responsavel, "id_grupo": id_grupo, "nome_tarefa": nome_tarefa, "descricao": descricao, "data_inicio": data_inicio, "data_entrega": data_entrega, "dta_feita": dta_feita, "resultado": resultado}
+        for (nome_tarefa, descricao, resultado, data_inicio, data_entrega, dta_feita) in self._cursor:
+            if dta_feita == None:
+                dta_feita = 'por fazer'
+            else:
+                dta_feita = dta_feita.strftime('%d/%m/%Y')
+            if resultado == None:
+                resultado = 'sem documento'
+            data_inicio = data_inicio.strftime('%d/%m/%Y')
+            data_entrega = data_entrega.strftime('%d/%m/%Y')
+            dic = {"nome_tarefa": nome_tarefa, "descricao": descricao, "resultado": resultado, "data_inicio": data_inicio, "data_entrega": data_entrega, "dta_feita": dta_feita}
             lista.append(dic)
         return lista
 
@@ -35,6 +43,11 @@ class Tarefa(object):
     def marcar_como_feita(self, id, data_feita):
         query = "UPDATE tarefas t SET t.dta_feita = %s where t.id = %s"
         dados = (f'{data_feita}', f'{id}')
+        self._executar_comando(query, dados, True)
+    
+    def editar_resultado(self, id, desc):
+        query = "UPDATE tarefas t SET t.resultado = %s where t.id = %s"
+        dados = (f'{desc}', f'{id}')
         self._executar_comando(query, dados, True)
     
     def buscar_nao_nulas(self, id_responsavel):
@@ -57,7 +70,9 @@ class Tarefa(object):
         
 if __name__ == "__main__":
     tarefa = Tarefa()
-    tarefa.criar_tarefa(24, 1, 'apresentar trabalho', 'apresentar um app feito para gerenciamento de tarefas', '2020/06/23')
+    print(tarefa.listar_tarefas(16))
+    #tarefa.editar_descricao(6, 'teste')
+    #tarefa.criar_tarefa(24, 1, 'apresentar trabalho', 'apresentar um app feito para gerenciamento de tarefas', '2020/06/23')
     #tarefa.excluir_tarefa(8)
     #print(tarefa.buscar_nao_nulas(24))
     #tarefa.marcar_como_feita(6, date.today())

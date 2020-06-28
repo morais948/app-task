@@ -80,7 +80,7 @@ tr:hover{
     align-items: center;
     padding: 10px;
     justify-content: flex-end;
-    background-color: #4F4F4F;
+    background-color: black;
     color: white;
     font-size: 15px;
 }
@@ -100,7 +100,7 @@ tr:hover{
     grid-template-rows: 150px 1fr 50px;
     grid-template-areas: 
     'cabecalho cabecalho'
-    'navegacao conteudo'
+    'conteudo conteudo'
     'rodape rodape';
     box-sizing: border-box;
     font-family: cursive;
@@ -116,6 +116,7 @@ tr:hover{
     align-items: center;
     font-weight: bolder;
     border-radius: 47%;
+    justify-content: space-around;
 }
 
 #cont{
@@ -160,3 +161,97 @@ a.link-cadastro:hover{
     margin: auto 0px;
 }
 
+#descricao{
+    margin: 0px auto;
+    width: 95%;
+    background-color: #ADD8E6;
+    color: black;
+    border: 1px solid black;
+}
+
+.edit{
+    width: 100%;
+}
+
+#editarTarefa{
+    border: none;
+    background-color: #ADD8E6;
+    text-align: center;
+}
+
+.meu-btn{
+    font-size: 4rem;
+    margin: auto;
+}
+
+.meu-btn:hover{
+    cursor: pointer;
+    color: green;
+}
+
+#tbGrupoInfo{
+    background-color: #ADD8E6;
+    font-size: 1.2rem;
+}
+
+#tbGrupoInfo{
+    text-align: center;
+}
+
+.textDesc{
+    margin-top: 0px auto; 
+    color: black; 
+    resize: none; 
+    border: none; 
+    background-color: white;
+    margin: auto;
+}
+
+.textDesc2{
+    margin-top: 0px auto; 
+    color: white; 
+    resize: none; 
+    border: none; 
+    background-color: black;
+    margin: auto;
+    width: 100%;
+    border-radius: 5px;
+    margin-top: 2%;
+}
+#tbGrupoInfo td{
+    background-color: white;
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: #e1e1e1;
+  border: 32px none #ffffff;
+  border-radius: 48px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #000000;
+}
+::-webkit-scrollbar-track {
+  background: #666666;
+  border: 8px none #ffffff;
+  border-radius: 27px;
+}
+::-webkit-scrollbar-track:hover {
+  background: #666666;
+}
+::-webkit-scrollbar-track:active {
+  background: #333333;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}

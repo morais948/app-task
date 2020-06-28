@@ -13,10 +13,10 @@
                                 <a href="#" onclick="carregarTarefasGrupo({{g['id']}})">Tarefas do grupo</a>
                             </td>
                             <td>
-                                <a href="#">Ações</a>
+                                <a onclick="acoesGrupo('{{g['id']}}')" href="#">Ações</a>
                             </td>
                             <td>
-                                <a href="#">Mais Informações</a>
+                                <a onclick="infosGrupo('{{g['id']}}')" href="#">Mais Informações</a>
                             </td>
                         </tr>
                     {% endfor %}

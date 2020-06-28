@@ -24,10 +24,16 @@
                         </td>
                         <td>
                             {{t['status']}}
+                            {{t['dta_feita']}}
                         </td>
                         <td>
-                            <a href="#">ver descrição</a>
+                            <a href="#" onclick="verDescricao('{{t['descricao']}}')" >descrição</a>
                         </td>
+                        {% if t['id_responsavel'] == id_user and t['status'] == 'por fazer' %}
+                            <td>
+                                <a onclick="carregarEdit({{t['id_tarefa']}})" href="#"><i class="fas fa-edit"></i></a>
+                            </td>
+                        {% endif %}
                         {% if t['id_responsavel'] == id_user %}
                             <td>
                                 <a onclick="apagarTarefa({{t['id_tarefa']}})" href="#"><i class="lixeira fas fa-trash-alt"></i></a>
@@ -38,4 +44,7 @@
                 {% endif %}
         </tbody>
     </table> 
+    <div id="descricao">
+        
+    </div>
 </div>

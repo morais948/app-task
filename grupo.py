@@ -30,6 +30,15 @@ class Grupo(object):
             lista.append(dic)
         return lista
 
+    def pegar_informacoes(self, id):
+        query = f"SELECT g.nome_grupo, g.descricao, g.data_criacao from grupos g where g.id = {id}"
+        self._executar_comando(query)
+        dic = None
+        for (nome_grupo, descricao, data_criacao) in self._cursor:
+            dic = {"nome_grupo": nome_grupo,
+                    "descricao": descricao, "data_criacao": data_criacao.strftime('%d/%m/%Y')}
+        return dic
+
     def listar_participantes(self, id_grupo):
         query = f"select g.ids_participante from grupos g where g.id = {id_grupo}"
         self._executar_comando(query)
@@ -47,16 +56,26 @@ class Grupo(object):
         return lista
 
     def get_tarefas(self, id_grupo):
-        query = f"SELECT t.id, t.id_responsavel, t.nome_tarefa, u.nome, t.dta_feita FROM tarefas t join grupos g on t.id_grupo = g.id join usuarios u on t.id_responsavel = u.id where g.id = {id_grupo}"
+        query = f"SELECT t.id, t.id_responsavel, t.nome_tarefa, u.nome, t.dta_feita, t.descricao FROM tarefas t join grupos g on t.id_grupo = g.id join usuarios u on t.id_responsavel = u.id where g.id = {id_grupo}"
         self._executar_comando(query)
         lista = []
-        for (id, id_responsavel, nome_tarefa, nome, dta_feita) in self._cursor:
+        for (id, id_responsavel, nome_tarefa, nome, dta_feita, descricao) in self._cursor:
             if dta_feita != None:
                 dta_feita = 'feita'
             else:
                 dta_feita = 'por fazer'
-            dic = {"id_tarefa": id, "id_responsavel": id_responsavel, "nome": nome_tarefa, "responsavel": nome, "status": dta_feita}
+            dic = {"id_tarefa": id, "id_responsavel": id_responsavel, "nome": nome_tarefa, "responsavel": nome, "status": dta_feita, "descricao": descricao}
             lista.append(dic)
+        return lista
+
+    def get_integrantes(self, id_grupo):
+        query = f"SELECT t.id_responsavel, u.nome FROM tarefas t join grupos g on t.id_grupo = g.id join usuarios u on t.id_responsavel = u.id where g.id = {id_grupo}"
+        self._executar_comando(query)
+        lista = []
+        for (id_responsavel, nome) in self._cursor:
+            dic = {"id_responsavel": id_responsavel, "nome": nome}
+            json_str = json.dumps(dic) 
+            lista.append(json_str)
         return lista
 
     def inserir_participante(self, id_grupo, id_user):
@@ -90,4 +109,4 @@ class Grupo(object):
               
 if __name__ == '__main__':
     gp = Grupo()
-    print(gp.get_tarefas(3))
+    print(gp.get_integrantes(1))

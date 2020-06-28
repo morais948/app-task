@@ -9,11 +9,28 @@
                     </a>
                 </div>
                 <div class="col-10 cabecalho">
-                    <h1>APP - LIST TASK - ORGANIZE-SE MELHOR</h1>
+                    <h1 style="font-size: 1.8rem;">APP - LIST TASK - ORGANIZE-SE MELHOR</h1>
+
+                    <div class="menu-overlay"></div>
+                    <a style="font-size: 2.5rem; color: white; text-decoration: none;" href="#" class="menu-open"><i class="fas fa-bars"></i></a>
+        
+                    <div class="side-menu-wrapper">
+                    <a href="#" class="menu-close">×</a>
+                    <ul>
+                        <li><a onclick="perfil()" class="link-menu" href="#">Meu Perfil</a></li>
+                        <li><a onclick="listarTarefas()" class="link-menu" href="#">Minhas Tarefas</a></li>
+                        <li><a class="link-menu" href="#">Criar Grupo</a></li>
+                        <li><a class="link-menu" href="#" onclick="carregarGrupos()">Grupos</a></li>
+                        <li><a class="link-menu" href="http://localhost:5000/sair">Sair</a></li>
+                    </ul>
+                    </div>
                 </div>
             </div>
         </header>
         <nav>
+
+
+            <!--
             <div class="container">
                 <div class="row mb-3">
                     <div class="col-12"><a class="link-menu" href="#">Meu Perfil</a></div>
@@ -31,10 +48,11 @@
                     <div class="col-12"><a class="link-menu" href="http://localhost:5000/sair">Sair</a></div>
                 </div>
             </div>
+            -->
         </nav>
         <main>
             <div class="row">
-                <div id="cont" class="col-12 conteudo-animado">
+                <div style="text-align: center;" id="cont" class="col-12 conteudo-animado">
                     <!---->
                     <img class="img-principal" src="{{ url_for('static',filename='imgs/t4.png') }}" alt="foto de apresentação">
                 </div>

@@ -1,0 +1,28 @@
+<div class="conteudo-animado">
+    <h1 style="text-align: center;">Ações Grupo</h1>
+    <table style="font-size: 1rem;" class="tbGrupo conteudo-animado">
+        <tbody>
+            <tr>
+                <th style="border-right: 1px solid black;">
+                    <h2 style="text-align: center;">Designar Tarefa</h2>
+                    <hr>
+                    <select onclick="buscarIntegrantes({{id}})" style="width: 100%; color: black;" id="integrantes" >
+                        <option value="#">integrantes</option>
+                    </select>
+                    <br>
+                    <input style="width: 100%;" name="nome" type="text" value="Nome da Tarefa">
+                    <br>
+                    <input style="width: 100%;"  name="desc" type="text" value="descrição">
+                    <br>
+                    <input style="width: 100%;"  name="data" type="date">
+                    <input style="display: none;" name="id_responsavel" type="text" value="{{id}}">
+                    <button>Designar</button>
+                </th>
+                <th style="border-right: 1px solid black;">
+                    <h2 style="text-align: center;">Adicionar Integrante</h2>
+                    <hr>
+                </th>
+            </tr>
+        </tbody>
+    </table>  
+</div>

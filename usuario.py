@@ -9,13 +9,19 @@ class Usuario(object):
         self._conexao = Conexao(self._dados_conexao).conexao
         self._cursor = self._conexao.cursor()
         self._id = ''
-        self.nome = ''
+        self._nome = ''
         self._email = ''
         self._senha = ''
         self._esta_logado = False
 
     def get_id(self):
         return self._id
+
+    def get_nome(self):
+        return self._nome
+
+    def get_email(self):
+        return self._email
 
     def get_logado(self):
         return self._esta_logado
@@ -88,7 +94,7 @@ class Usuario(object):
         if json_obj != None:
             useruario = json.loads(json_obj)
             self._id = useruario['id']
-            self.nome = useruario['nome']
+            self._nome = useruario['nome']
             self._email = useruario['email']
             self._senha = useruario['senha']
             self._esta_logado = True
