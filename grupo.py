@@ -125,18 +125,25 @@ class Grupo(object):
         for x in self._cursor:
             participantes = x[0]
 
-        if re.findall(f',?{id_user},?', participantes)[0][0] == ',' and re.findall(f',?{id_user},?', participantes)[0][-1] == ',':
-            participantes = participantes.replace(f'{id_user},', '')
-        elif re.findall(f',?{id_user},?', participantes)[0][0] == ',' and re.findall(f',?{id_user},?', participantes)[0][-1] != ',':
-            participantes = participantes.replace(f',{id_user}', '')
-        elif re.findall(f',?{id_user},?', participantes)[0][0] != ',' and re.findall(f',?{id_user},?', participantes)[0][-1] == ',':
-            participantes = participantes.replace(f'{id_user},', '')
+        if ',' in participantes:
+            if re.findall(f',?{id_user},?', participantes)[0][0] == ',' and re.findall(f',?{id_user},?', participantes)[0][-1] == ',':
+                participantes = participantes.replace(f'{id_user},', '')
+            elif re.findall(f',?{id_user},?', participantes)[0][0] == ',' and re.findall(f',?{id_user},?', participantes)[0][-1] != ',':
+                participantes = participantes.replace(f',{id_user}', '')
+            elif re.findall(f',?{id_user},?', participantes)[0][0] != ',' and re.findall(f',?{id_user},?', participantes)[0][-1] == ',':
+                participantes = participantes.replace(f'{id_user},', '')
             
-        query_2 = "UPDATE grupos SET ids_participante = %s where id = %s"
-        dados = (f'{participantes}', f'{id_grupo}')
-        self._executar_comando(query_2, dados, True)
-              
+            query_2 = "UPDATE grupos SET ids_participante = %s where id = %s"
+            dados = (f'{participantes}', f'{id_grupo}')
+            self._executar_comando(query_2, dados, True)
+        else:
+            participantes = participantes.replace(f'{id_user}', '')
+            query_2 = "UPDATE grupos SET ids_participante = %s where id = %s"
+            dados = (f'{participantes}', f'{id_grupo}')
+            self._executar_comando(query_2, dados, True)
+
 if __name__ == '__main__':
     gp = Grupo()
-    print(gp.get_integrantes(8))
+    gp.excluir_participante(3, 31)
+    #print(gp.get_integrantes(8))
     #print(gp.inserir_participante(3, 25))
